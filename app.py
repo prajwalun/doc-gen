@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 
 # Directly setting the API key
-API_KEY = 'YOUR_OPENAI_API_KEY'
+API_KEY = 'YOUR_API_KEY'
 
 @app.route('/', methods=['GET', 'POST'])
 def generate_documentation():
@@ -67,3 +67,6 @@ def generate_documentation():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
