@@ -3,9 +3,10 @@ import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import time
+import os
 
 app = Flask(__name__)
-API_KEY = "YOUR_API_KEY"  # Replace with your actual OpenAI API key
+API_KEY = os.getenv("OPENAI_API_KEY")
 
 
 def create_prompt(code_content, doc_type):
