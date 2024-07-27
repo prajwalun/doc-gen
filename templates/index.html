@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="upload-box">
+            <h1>Submit Your Code</h1>
+            <p>Even if it's messy, it's ok :)</p>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="form-group" id="drop-area">
+                    <input type="file" name="file" id="file" required>
+                    <label for="file" class="custom-file-label">Drag a file here or <span>browse</span> for a file to upload.</label>
+                </div>
+                <div class="form-group">
+                    <label for="doc_type">Select Documentation Style</label>
+                    <select name="doc_type" id="doc_type">
+                        <option value="overview">Overview</option>
+                        <option value="detailed">Detailed</option>
+                        <option value="usage">Usage</option>
+                        <option value="faq">FAQ</option>
+                    </select>
+                </div>
+                <button type="submit">Generate Documentation</button>
+            </form>
+            <div id="loading" style="display:none;">Processing...</div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
