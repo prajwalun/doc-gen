@@ -7,18 +7,59 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css">
+    <style>
+    .copy-button {
+    position: absolute;    /* Ensures the button is positioned relative to its nearest positioned ancestor */
+    top: 10px;             /* Places the button near the top-right corner */
+    right: 10px;           /* Keeps the button at a consistent distance from the right edge */
+    padding: 5px 8px;      /* Reduces padding to make the button smaller */
+    font-size: 10px;       /* Smaller font size for subtlety */
+    background-color: #9179f2; /* Consistent soft purple color */
+    color: white;
+    border: none;
+    border-radius: 4px;    /* Rounded corners for aesthetic appeal */
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.2s ease; /* Smooth transition for hover effects */
+    width: auto;           /* Set width to auto to prevent stretching */
+    display: inline-block; /* Ensure the button is treated as an inline element with block features */
+}
+
+.copy-button:hover {
+    background-color: #a89cff; /* Lighter purple on hover */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+
+
+
+
+    </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-button btn btn-primary mb-3">Back to Upload</a>
         <div class="card">
+            <button class="copy-button" onclick="copyDocumentation()">Copy</button>
             <div class="card-body">
                 <h1 class="card-title">Generated Documentation</h1>
-                <pre class="language-markup"><code>{{ documentation | safe }}</code></pre>
+                <pre class="language-markup" id="documentation"><code>{{ documentation | safe }}</code></pre>
             </div>
-        </div>
+        </div>        
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-python.min.js"></script>
+    <script>
+        function copyDocumentation() {
+            var copyText = document.getElementById('documentation').innerText;
+            var textArea = document.createElement('textarea');
+            textArea.value = copyText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('Copy');
+            textArea.remove();
+            alert('Content copied to clipboard!');
+        }
+    </script>
 </body>
 </html>

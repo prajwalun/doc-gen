@@ -45,6 +45,18 @@ document.addEventListener('DOMContentLoaded', function() {
     setupDragAndDrop();
 });
 
+function copyDocumentation() {
+    var copyText = document.getElementById('documentation').innerText;
+    var textArea = document.createElement('textarea');
+    textArea.value = copyText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('Copy');
+    textArea.remove();
+    alert('Content copied to clipboard!');
+}
+
+
 function setupDragAndDrop() {
     var dropArea = document.getElementById('drop-area');
     var fileInput = document.getElementById('file');

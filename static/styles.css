@@ -20,7 +20,9 @@ body {
 
 /* Container and Upload Box */
 .container {
-    text-align: center;
+    max-width: 1200px; /* Limiting the maximum width to align with the card */
+    margin: auto; /* Center aligning the container */
+    padding-top: 20px; /* Adding some padding at the top to prevent overlap with any navigation or header */
 }
 
 .upload-box {
@@ -191,35 +193,53 @@ button:active {
 }
 
 .card {
+    position: relative; /* Critical for positioning the button */
     width: 100%;
-    max-width: 800px; /* You can adjust the max-width as needed */
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-  }
-  
-  .card-body {
-    padding: 20px;
-  }
-  
-  .card-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  pre.language-markup {
-    max-height: 400px; /* Adjust the height as needed */
+    background: linear-gradient(135deg, #eae6ff, #dcd8ff);
+    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    transition: all 0.3s ease;
+    padding: 40px; /* Make sure padding does not push the button out */
+}
+
+
+.card:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+    font-size: 30px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 25px;
+}
+
+.card-body {
+    line-height: 1.6;
+}
+
+pre.language-markup {
+    max-height: 600px;
     overflow: auto;
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  pre.language-markup code {
+    background-color: #fafaff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    font-size: 16px;
+    color: #333;
+}
+
+pre.language-markup code {
     white-space: pre-wrap;
     word-wrap: break-word;
-  }
-  
+}
+
+.back-button {
+    position: relative; /* Adjust position if necessary or leave as static for default flow */
+    margin-bottom: 20px; /* Ensure there's sufficient space below the button */
+}
+
