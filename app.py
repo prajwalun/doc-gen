@@ -5,7 +5,7 @@ import time
 import os
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(32) 
+app.secret_key = secrets.token_hex(32)
 API_KEY = os.getenv("OPENAI_API_KEY")
 
 
@@ -71,7 +71,7 @@ def generate_documentation():
         try:
             # Process the entire content in one go
             result = process_chunk(code_content, doc_type)
-            
+
             if "Error" in result:
                 return jsonify({"error": "Processing error"}), 500
 
@@ -81,19 +81,21 @@ def generate_documentation():
             print(f"Processing error: {e}")
             return jsonify({"error": "Internal server error"}), 500
     else:
-        return render_template('index.html')
+        return render_template("index.html")
 
-@app.route("/save-documentation", methods=['POST'])
+
+@app.route("/save-documentation", methods=["POST"])
 def save_documentation():
-    documentation = request.json.get('documentation', '')
-    session['documentation'] = documentation
+    documentation = request.json.get("documentation", "")
+    session["documentation"] = documentation
     return jsonify({"success": True})
 
 
 @app.route("/documentation")
 def display_documentation():
-    documentation = session.get('documentation', '')
+    documentation = session.get("documentation", "")
     return render_template("documentation.html", documentation=documentation)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
