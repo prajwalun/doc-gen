@@ -12,13 +12,35 @@ API_KEY = os.getenv("OPENAI_API_KEY")
 def create_prompt(code_content, doc_type):
     """Generates a custom prompt based on the selected documentation style."""
     base_prompt = f"### Code\n{code_content}\n###"
+    
     prompts = {
-        "overview": f"{base_prompt}\nProvide a brief overview of what the code does.",
-        "detailed": f"{base_prompt}\nProvide a detailed explanation of the code.",
-        "usage": f"{base_prompt}\nDemonstrate how to use the main functions.",
-        "faq": f"{base_prompt}\nList frequently asked questions.",
+        "overview": (
+            f"{base_prompt}\n"
+            "Provide a concise overview of this code snippet. "
+            "Include its purpose, main functionality, and any significant components."
+        ),
+        "detailed": (
+            f"{base_prompt}\n"
+            "Provide a detailed, in-depth explanation of how this code works. "
+            "Discuss the logic, the flow, and any dependencies it has. "
+            "Explain critical sections of the code and how they contribute to the overall functionality."
+        ),
+        "usage": (
+            f"{base_prompt}\n"
+            "Demonstrate how to use the main functions provided by this code snippet. "
+            "Include examples of how to initialize any classes, how to call the functions, "
+            "and describe what the expected inputs and outputs are. Provide example use cases if applicable."
+        ),
+        "faq": (
+            f"{base_prompt}\n"
+            "List some frequently asked questions (FAQs) about this code snippet. "
+            "Include questions about common issues, configuration options, "
+            "and how to integrate this code with other modules or systems."
+        )
     }
+    
     return prompts.get(doc_type, base_prompt)
+
 
 
 def api_call(data):
