@@ -189,3 +189,37 @@ button:active {
     margin: 20px auto;
     display: none;
 }
+
+.card {
+    width: 100%;
+    max-width: 800px; /* You can adjust the max-width as needed */
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  pre.language-markup {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow: auto;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  pre.language-markup code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
