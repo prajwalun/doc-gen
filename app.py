@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session
 import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import json
+import secrets
 import time
 import os
 
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(32) 
 API_KEY = os.getenv("OPENAI_API_KEY")
 
 
@@ -67,40 +67,33 @@ def generate_documentation():
             return jsonify({"error": "No selected file"}), 400
 
         code_content = file.read().decode("utf-8")
-        chunks = [
-            code_content[i : i + 1500] for i in range(0, len(code_content), 1500)
-        ]  # Adjusted chunk size
-        results = []
 
-        with ThreadPoolExecutor(max_workers=15) as executor:  # Increased max_workers
-            future_to_chunk = {
-                executor.submit(process_chunk, chunk, doc_type): chunk
-                for chunk in chunks
-            }
-            for future in as_completed(future_to_chunk):
-                try:
-                    result = future.result()
-                    if "Error" in result:
-                        print(result)  # Log the error
-                        continue  # Optionally handle or log the error
-                    results.append(result)
-                except Exception as e:
-                    print(f"Future processing error: {e}")
+        try:
+            # Process the entire content in one go
+            result = process_chunk(code_content, doc_type)
+            
+            if "Error" in result:
+                return jsonify({"error": "Processing error"}), 500
 
-        if not results:
-            return jsonify({"error": "All chunks failed to process"}), 500
+            return jsonify({"documentation": result})
 
-        formatted_documentation = "\n\n".join(results)
-        return jsonify({"documentation": formatted_documentation})
+        except Exception as e:
+            print(f"Processing error: {e}")
+            return jsonify({"error": "Internal server error"}), 500
     else:
-        return render_template("index.html")
+        return render_template('index.html')
+
+@app.route("/save-documentation", methods=['POST'])
+def save_documentation():
+    documentation = request.json.get('documentation', '')
+    session['documentation'] = documentation
+    return jsonify({"success": True})
 
 
 @app.route("/documentation")
 def display_documentation():
-    documentation = request.args.get("documentation", "")
+    documentation = session.get('documentation', '')
     return render_template("documentation.html", documentation=documentation)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
